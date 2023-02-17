@@ -1,10 +1,12 @@
-﻿namespace TestTaskIS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TestTaskIS.Models
 {
     public class Event
     {
         public Guid id { get; set; } //pk
-        public Guid deviceid { get; set; } //fk
-        public object value { get; set; } 
-
+        public Guid deviceId { get; set; } //fk
+        public Device device { get; set; }
+        public string value { get; set; } 
     }
 }
