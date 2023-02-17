@@ -6,7 +6,7 @@ using TestTaskIS.Services;
 namespace TestTaskIS.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
 
@@ -24,7 +24,7 @@ namespace TestTaskIS.Controllers
             return new JsonResult(user.id);
         }
         [HttpGet]
-        public JsonResult GetUsers([FromHeader] Guid userId)
+        public JsonResult GetUsers() //ger user list from db
         {
             return new JsonResult(_con.Users.ToList());
         }

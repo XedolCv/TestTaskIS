@@ -1,4 +1,6 @@
-﻿namespace TestTaskIS.Models
+﻿using TestTaskIS.Services;
+
+namespace TestTaskIS.Models
 {
     public enum Permissions
     {
@@ -6,11 +8,6 @@
         read = 1,
         delete =2,
         update= 3
-    }
-    public enum Modules
-    {
-        Devices,
-        Events
     }
     public class User
     {
@@ -27,7 +24,6 @@
             id = Guid.NewGuid();
             isValid= true;
         }
-
     }
     
 }

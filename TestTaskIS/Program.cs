@@ -21,7 +21,7 @@ if (app.Environment.IsDevelopment())
     
 }
 app.UseRouting();
-app.UseWhen(context => context.Request.Path.StartsWithSegments("/event") || context.Request.Path.StartsWithSegments("/device"), appBuilder => { appBuilder.UseMiddleware<MyMiddleware>(); });
+app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/event") || context.Request.Path.StartsWithSegments("/api/device"), appBuilder => { appBuilder.UseMiddleware<MyMiddleware>(); });
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
