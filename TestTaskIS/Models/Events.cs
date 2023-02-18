@@ -11,7 +11,7 @@ namespace TestTaskIS.Models
         public Guid deviceId { get; set; } //fk
         [JsonIgnore]
         public Device device { get; set; } 
-        public string valueSrting { get; private set; }
+        public string valueSrting { get; set; }
         [NotMapped]
         private Content value
         {

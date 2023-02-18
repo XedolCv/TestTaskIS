@@ -11,16 +11,27 @@ namespace TestTaskIS.Controllers
     {
         private MyContext _con;
         public EventController(MyContext con) { _con = con; }
+        /// <summary>
+        /// Список всех событий для всех устройств.
+        /// </summary>
         [HttpGet("allEvents")]
         public JsonResult GetAllEvents([FromHeader] Guid userId) //ger device list from db
         {
             return new JsonResult(_con.Events.ToList());
         }
+        /// <summary>
+        /// Список событий для конкретного устройства по ID.
+        /// </summary>
+        ////<response code="401">Ошибка авторизации , пользователь с таким ID не найден или у пользователя нет прав доступа к данному методу.</response>
         [HttpGet("eventsForDevice")]
         public JsonResult GetEvents([FromHeader] Guid userId,Guid deviceId) //ger device list from db
         {
             return new JsonResult(_con.Events.Where(e => e.deviceId == deviceId));
         }
+        /// <summary>
+        /// Создание новго события для конкретного устройства по ID.
+        /// </summary>
+        /// <response code="401">Ошибка авторизации , пользователь с таким ID не найден или у пользователя нет прав доступа к данному методу.</response>
         [HttpPost("createEvent")]
         public JsonResult CreateEvent([FromHeader] Guid userId, Guid deviceId,Content eventContent) //create new device
         {

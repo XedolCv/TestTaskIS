@@ -1,4 +1,6 @@
-﻿using TestTaskIS.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using TestTaskIS.Models;
 
 namespace TestTaskIS.Services
 {
@@ -19,13 +21,15 @@ namespace TestTaskIS.Services
             {
 
                 User user = _con.Users.FirstOrDefault(it => it.id == Guid.Parse(authHeader));
-                var s = context.Request.Method;
+                var requestMethod = context.Request.Method;
+                var controllerActionDescriptor = context.GetEndpoint().Metadata.GetMetadata<ControllerActionDescriptor>();
+                var controllerName = controllerActionDescriptor.ControllerName;
                 if (user != null && user.isValid)
                 {
-                    if (s == "GET" && user.perms.Contains(Permissions.read) || s == "POST" && user.perms.Contains(Permissions.create))
-                    {
-                        await _next(context);
-                    }
+                        if (user.CheckPermissions(controllerName, requestMethod))
+                        {
+                            await _next(context);
+                        }
                     else
                     {
                         context.Response.StatusCode = 401;
@@ -33,7 +37,7 @@ namespace TestTaskIS.Services
                     }
                 }
                 else context.Response.StatusCode = 401; return;
-
+                await _next(context);
             }
             else
             {
